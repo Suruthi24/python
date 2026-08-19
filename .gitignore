@@ -1,0 +1,4 @@
+__pycache__/
+Library/titanic_data.xlsx
+Library/train_titanic.csv
+Library/age_distribution.png

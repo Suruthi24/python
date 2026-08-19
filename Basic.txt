@@ -1,0 +1,176 @@
+LAMBDA: small anoymous function
+lambda <input_arg>:<expression>
+
+MAP: Take every item and apply this operation to it.
+map(lambda)
+numbers = [1, 2, 3, 4]
+result = []
+for x in numbers:
+    result.append(x * 2)
+print(result)
+
+With map():
+numbers = [1, 2, 3, 4]
+result = map(lambda x: x * 2, numbers)
+print(list(result))
+
+Output:
+[2, 4, 6, 8]
+
+FILTER: Keep only the items I want
+numbers = [1, 2, 3, 4, 5, 6]
+result = []
+for x in numbers:
+    if x % 2 == 0:
+        result.append(x)
+print(result)
+
+Output:
+[2, 4, 6]
+
+Using filter():
+numbers = [1, 2, 3, 4, 5, 6]
+result = filter(lambda x: x % 2 == 0, numbers)
+print(list(result))
+
+map    → CHANGE every item
+filter → SELECT some items
+
+nums = [1, 2, 3, 4]
+squared = list(map(lambda x: x**2, nums)) --> [1,4,9,16]
+even = list(filter(lambda x: x % 2 == 0, nums)) --> [2,4]
+
+----------------------------------------------------------------
+
+ITERATOR — "Something that gives you one item at a time"
+Imagine a vending machine.
+You don't get everything at once.
+You press the button:
+→ Item 1
+Press again:
+→ Item 2
+Again:
+→ Item 3
+
+That's similar to an iterator.
+
+Example:
+numbers = [10, 20, 30]
+it = iter(numbers)
+print(next(it))
+print(next(it))
+print(next(it))
+Output:
+10
+20
+30
+Then:
+print(next(it))
+You'll get:
+StopIteration
+
+because there are no more items.
+iter() --> Turns something iterable into an iterator:
+it = iter([10, 20, 30])
+
+next() --> Gets the next item:
+next(it)
+iterator
+   ↓
+next() → 10
+next() → 20
+next() → 30
+next() → STOP
+
+-----------------------------------------------------
+
+GENERATORS:
+def numbers():
+    for i in range(1, 1000000001):
+        yield i
+
+HERE, It gives you one number at a time.
+
+Iterator vs Generator
+Very important:
+Every generator is an iterator, but not every iterator is a generator
+
+-----------------------------------------------------
+
+CLOSURE: A function remembering something
+eg:non-local variable
+
+-----------------------------------------------------
+Decorator — "Wrap a function and add extra behavior"
+
+def my_decorator(func): #definition of Decorator
+    def wrapper():
+        print("Starting")
+        func()
+        print("Finished")
+    return wrapper
+
+@my_decorator #my_decorator(greet)
+def greet():
+    print("Hello")
+greet()
+
+Output:
+Starting
+Hello
+Finished
+
+used in:
+Logging
+Authentication
+Timing
+Caching
+Permission checking
+Validation
+
+
+
+REAL- TIME EXAMPLE:
+User requests delete account
+          ↓
+    Is user logged in?
+       ↙       ↘
+     YES        NO
+      ↓          ↓
+Delete account  Reject
+
+Instead of putting login-checking code inside every function, you create a decorator.
+
+Step 1 — Create the decorator
+def login_required(func):
+    def wrapper(user):
+        if user["logged_in"]:
+            func(user)
+        else:
+            print("Please login first")
+    return wrapper
+
+Step 2 — Use it
+@login_required
+def delete_account(user):
+    print("Account deleted")
+
+CASE1:
+user1 = {
+    "name": "Suruthi",
+    "logged_in": True
+}
+delete_account(user1)
+
+Output:
+Account deleted
+
+CASE2:
+user2 = {
+    "name": "Suruthi",
+    "logged_in": False
+}
+delete_account(user2)
+
+Output:
+Please login first
